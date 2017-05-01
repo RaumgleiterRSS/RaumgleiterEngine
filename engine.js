@@ -1,11 +1,11 @@
 const http = require('http')
 const https = require('https')
 const fs = require('fs')
+const xml2js = require('xml2js')
 
 const port = 3000
 
 let s1 = 'https://www.computerbase.de/rss/news.xml'
-//let s1 = 'https://www.heise.de/newsticker/heise-atom.xml'
 
 function fetchSourceFeed (source, callback) {
 	https.get(source, (res) => {
@@ -22,14 +22,26 @@ function fetchSourceFeed (source, callback) {
 	})
 }
 
+function convertXmlToJson (xml, callback) {
+	//currently using xml2js package
+	xml2js.parseString(xml, function(err, result) {
+		callback(result)
+	})
+}
+
 //creating as https server?!
 http.createServer((req, res) => {
 	res.writeHead(200, {'Content-Type': 'text/plain'})
 	fetchSourceFeed(s1, (payload) => {
-		res.write(payload)
-		res.end()
+		convertXmlToJson(payload, (json) => {
+			console.log(json.feed.entry[0].title)
+			//needs to be only sent on / not on /favicon
+			console.log(req.url)
+			let jsonAsString = JSON.stringify(json)
+			res.write(jsonAsString)
+			res.end()
+		})
 	})
-
 }).listen(port)
 
 console.log(`Engine running on port ${port}`)
