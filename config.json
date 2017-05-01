@@ -1,0 +1,12 @@
+{
+	"system": {
+		"server": {
+			"port": 3000
+		}
+	},
+
+	"sources": [
+		"https://www.computerbase.de/rss/news.xml",
+		"https://www.heise.de/newsticker/heise-atom.xml"
+	]
+}
