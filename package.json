@@ -1,0 +1,12 @@
+{
+  "name": "raumgleiterengine",
+  "version": "0.0.1",
+  "description": "RSS Engine for RaumgleiterRSS",
+  "main": "engine.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Daniel Henning",
+  "license": "MIT",
+  "dependencies": {}
+}
