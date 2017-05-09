@@ -1,6 +1,6 @@
 # RaumgleiterEngine
 
-**bleeding edge**
+Status: **bleeding edge**
 
 This is the engine behind the RaumgleiterRSS Reader.
 It's a nodejs application with an RESTful API writing its data to MongDB collections.
@@ -26,9 +26,9 @@ Following requests are possible:
 Some characters need to be replaced like following:
 
 ```
-`:` => `__`
-`.` => `_`
-`/` => `-`
+: => __
+. => _
+/ => -
 ```
 
 ### Reading current saved source urls from database
