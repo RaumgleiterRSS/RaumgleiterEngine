@@ -1,13 +1,8 @@
 {
 	"system": {
 		"server": {
-			"port": 3000,
-			"mongodb_url": "mongodb://localhost:27017/raumgleiter_engine"
+			"port": PORT,
+			"mongodb_url": MONGODB_URL
 		}
-	},
-
-	"sources": [
-		"https://www.computerbase.de/rss/news.xml",
-		"https://www.heise.de/newsticker/heise-atom.xml"
-	]
+	}
 }
