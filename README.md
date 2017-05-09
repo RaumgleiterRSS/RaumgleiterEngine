@@ -25,10 +25,11 @@ Following requests are possible:
 **Note: Currently, the parameter `:url` needs to be modified to have RaumgleiterEngine parse it correctly.
 Some characters need to be replaced like following:
 
+```
 `:` => `__`
 `.` => `_`
 `/` => `-`
-
+```
 
 ### Reading current saved source urls from database
 `*GET* /sources`
