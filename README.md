@@ -1,14 +1,14 @@
-#RaumgleiterEngine
+# RaumgleiterEngine
 
 **bleeding edge**
 
 This is the engine behind the RaumgleiterRSS Reader.
 It's a nodejs application with an RESTful API writing its data to MongDB collections.
 
-##Requirements:
+## Requirements:
 - MongoDB instance
 
-##Installation:
+## Installation:
 
 1. Clone the repo
 2. Install dependencies with `npm install`
@@ -17,7 +17,7 @@ It's a nodejs application with an RESTful API writing its data to MongDB collect
 - MONGODB_URL: The url to your mongodb instance, for example: `mongodb://localhost:27017/raumgleiter_engine`
 4. Start the engine with `node engine.js`
 
-##Usage:
+## Usage:
 
 RaumgleiterEngine uses a RESTful API.
 Following requests are possible:
@@ -30,11 +30,11 @@ Some characters need to be replaced like following:
 `/` => `-`
 
 
-###Reading current saved source urls from database
+### Reading current saved source urls from database
 `*GET* /sources`
 
-###Adding a new source url to the database
+### Adding a new source url to the database
 `*POST* /sources/:url`
 
-###Removing a source url from the database
+### Removing a source url from the database
 `*DELETE* /sources/:url`
