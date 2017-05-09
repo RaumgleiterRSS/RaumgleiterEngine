@@ -9,6 +9,7 @@
   "author": "Daniel Henning",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.15.2",
     "mongodb": "^2.2.26",
     "xml2js": "^0.4.17"
   }
