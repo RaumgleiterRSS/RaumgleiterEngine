@@ -1,7 +1,10 @@
-const http = require('http')
 const https = require('https')
 const xml2js = require('xml2js')
 const config = require('./config.json')
+const express = require('express')
+const app = express()
+
+const database = require(`./modules/database`)
 
 const port = config.system.server.port
 
@@ -39,8 +42,7 @@ function convertIdToValidJsonKey (id) {
 	return strippedId
 }
 
-//creating as https server?!
-http.createServer((req, res) => {
+app.get('/', (req, res) => {
 	res.writeHead(200, {'Content-Type': 'text/plain'})
 
 	let completeJsonPayload = {}
@@ -66,6 +68,37 @@ http.createServer((req, res) => {
 			})
 		})
 	}
-}).listen(port)
+})
+
+//read sources
+app.get('/sources', (req, res) => {
+	database.sources.read(function(callback) {
+		res.send(callback)
+		res.end()
+	})
+})
+
+//create sources
+app.post('/sources/:url', (req, res) => {
+	const url = req.params.url
+	database.sources.create(url, function(callback) {
+		res.send(callback)
+		res.end()
+	})
+})
+
+//update sources
+app.put('/sources', (req, res) => {
+	res.send('put sources')
+	res.end()
+})
+
+//delete sources
+app.delete('/sources', (req, res) => {
+	res.send('delete sources')
+	res.end()
+})
+
+app.listen(port)
 
 console.log(`Engine running on port ${port}`)
