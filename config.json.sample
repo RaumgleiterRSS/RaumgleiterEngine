@@ -1,0 +1,12 @@
+{
+	"system": {
+		"server": {
+			"port": PORT,
+			"mongodb_url": MONGODB_URL
+		}
+	}
+	"sources": [
+		SAMPLE_RSS_URL,
+		SAMPLE_RSS_URL2
+	]
+}
