@@ -4,7 +4,7 @@ const config = require('./config.json')
 const express = require('express')
 const app = express()
 
-const database = require(`./modules/database`)
+const database = require(`./modules/sources`)
 
 const port = config.system.server.port
 
@@ -94,9 +94,12 @@ app.put('/sources', (req, res) => {
 })
 
 //delete sources
-app.delete('/sources', (req, res) => {
-	res.send('delete sources')
-	res.end()
+app.delete('/sources/:url', (req, res) => {
+	const url = req.params.url
+	database.sources.delete(url, function(callback) {
+		res.send(callback)
+		res.end()
+	})
 })
 
 app.listen(port)

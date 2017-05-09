@@ -11,30 +11,32 @@ function callbackSchema (status, reason, content) {
 	}
 }
 
+function convertUrl (url) {
+	const modifiedUrl = url
+		.replace(/__/g, ':')
+		.replace(/_/g, `.`)
+		.replace(/-/g, `/`)
+
+	return modifiedUrl
+}
+
 const sources = {
 	read: function (callback) {
 		mdbClient.connect(mdbUrl, (err, db) => {
-			console.log(`mdbConnect successfull`)
 			db.collection('sources').find({}).toArray((err, items) => {
-				console.log(items)
 				callback(items)
 				db.close()
 			})
 		})
 	},
 	create: function (source_url, callback) {
-		const url = source_url
-			.replace(/__/g, ':')
-			.replace(/_/g, `.`)
-			.replace(/-/g, `/`)
+		const url = convertUrl(source_url)
 
 		//Validating url before trying to add it to database
 		//TODO need to validate if it is a rss feed
 		https.get(url, (res) => {
-			console.log(res.statusCode)
 			if (res.statusCode == 200) {
 				mdbClient.connect(mdbUrl, (err, db) => {
-					console.log(`mdbConnect successfull`)
 					db.collection('sources').find({url: url}).toArray((err, item) => {
 						if (item.length == 0) {
 							db.collection('sources').insertOne({url: url})
@@ -42,6 +44,7 @@ const sources = {
 						} else {
 							callback(callbackSchema(`denied`, `URL is already in database`))
 						}
+						db.close()
 					})
 				})
 			} else {
@@ -49,8 +52,20 @@ const sources = {
 			}
 		})
 	},
-	delete: function () {
-		return `delete`
+	delete: function (source_url, callback) {
+		const url = convertUrl(source_url)
+
+		mdbClient.connect(mdbUrl, (err, db) => {
+			db.collection(`sources`).deleteOne({url: url}, (err, del) => {
+				if (del.deletedCount == 0) {
+					callback(callbackSchema(`denied`, `No matching url found`))
+				} else if (del.deletedCount > 0) {
+					callback(callbackSchema(`allowed`, `URL deleted`))
+				}
+
+				db.close()
+			})
+		})
 	}
 }
 
