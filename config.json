@@ -1,8 +1,0 @@
-{
-	"system": {
-		"server": {
-			"port": PORT,
-			"mongodb_url": MONGODB_URL
-		}
-	}
-}
